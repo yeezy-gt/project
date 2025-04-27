@@ -9,6 +9,7 @@ import numpy as np
 from PIL import Image
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
+from config import INFER_CONFIG
 
 class IrisDataset(Dataset):
     """
@@ -88,7 +89,7 @@ def get_data_loaders(data_dir, batch_size=32, train_split=0.8, val_split=0.1):
     """
     # Define transformations
     transform = transforms.Compose([
-        transforms.Resize((224, 224)),  # ResNet expects 224x224 images
+        transforms.Resize(INFER_CONFIG['image_size']),  # ResNet expects 224x224 images
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # ImageNet normalization
     ])
@@ -112,3 +113,8 @@ def get_data_loaders(data_dir, batch_size=32, train_split=0.8, val_split=0.1):
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
     
     return train_loader, val_loader, test_loader
+
+def get_train_loader(data_dir='data', batch_size=32, train_split=0.8, val_split=0.1):
+    x, y, z = get_data_loaders(data_dir, batch_size, train_split, val_split)
+    return x
+
