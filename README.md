@@ -54,11 +54,11 @@ python train.py
 ### Inference
 To detect irises in a single image:
 ```
-python interface.py --image path/to/image.jpg
+python predict.py --image path/to/image.jpg
 ```
 To detect irises in all the images in a directory:
 ```
-python interface.py --image path/
+python predict.py --image path/
 ```
 The outputs will be stored in the results/ directory.
 
