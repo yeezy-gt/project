@@ -1,0 +1,4 @@
+__pycache__
+checkpoints/final_weights.pth
+checkpoints/best_model.pth
+checkpoints/final_weights.pth.zip
