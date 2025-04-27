@@ -56,6 +56,7 @@ To detect irises in a single image:
 ```
 python interface.py --image path/to/image.jpg
 ```
+The outputs will be stored in the results/ directory.
 
 Additional options:
 - `--checkpoint path/to/checkpoint.pth`: Specify a custom model checkpoint
