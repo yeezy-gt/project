@@ -32,7 +32,7 @@ The model utilizes a custom implementation of ResNet34 (Residual Network) archit
 - `dataset.py`: Handles data loading and preprocessing
 - `train.py`: Contains the training loop and related functions
 - `predict.py`: Implements inference functionality
-- `interface.py`: Provides a user-friendly interface for using the model
+- `interface.py`: Required for grading
 - `config.py`: Centralizes configuration parameters
 
 ## Usage Instructions
