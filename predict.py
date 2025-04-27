@@ -187,41 +187,31 @@ def process_single_image(image_path, model, visualize=True):
     return coordinates, vis_path
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Iris Detection Interface')
-    parser.add_argument('--image', type=str, help='Path to input image or directory')
-    parser.add_argument('--checkpoint', type=str, default=INFER_CONFIG['checkpoint_path'],
-                        help='Path to model checkpoint')
-    parser.add_argument('--no-visualize', action='store_true', help='Disable visualization')
-    args = parser.parse_args()
+def main(image="data", checkpoint=INFER_CONFIG['checkpoint_path'], no_visualize=False):
 
-    # Check if image path is provided
-    if not args.image:
-        print('Please provide an input image or directory path using --image')
-        return
 
     # Load the model
     try:
-        model = load_model(args.checkpoint)
-        print(f'Model loaded successfully from {args.checkpoint}')
+        model = load_model(checkpoint)
+        print(f'Model loaded successfully from {checkpoint}')
     except Exception as e:
         print(f'Error loading model: {str(e)}')
         return
 
     # Check if input is a directory or a file
-    if os.path.isdir(args.image):
+    if os.path.isdir(image):
         # Process all images in the directory
         exts = ['.jpg', '.jpeg', '.png', '.bmp']
-        image_files = [os.path.join(args.image, f) for f in os.listdir(args.image)
+        image_files = [os.path.join(image, f) for f in os.listdir(image)
                        if os.path.splitext(f)[1].lower() in exts]
         if not image_files:
-            print(f'No image files found in directory {args.image}')
+            print(f'No image files found in directory {image}')
             return
-        print(f'Processing {len(image_files)} images in directory {args.image}')
+        print(f'Processing {len(image_files)} images in directory {image}')
         for img_path in image_files:
             try:
                 coordinates, vis_path = process_single_image(
-                    img_path, model, visualize=not args.no_visualize
+                    img_path, model, visualize=not no_visualize
                 )
                 print(f'Image: {os.path.basename(img_path)}')
                 print(f'Output vector (xleft, yleft, xright, yright): ({coordinates[0]:.2f}, {coordinates[1]:.2f}, {coordinates[2]:.2f}, {coordinates[3]:.2f})')
@@ -229,18 +219,18 @@ def main():
                     print(f'Visualization saved to {vis_path}')
             except Exception as e:
                 print(f'Error processing {img_path}: {str(e)}')
-    elif os.path.isfile(args.image):
+    elif os.path.isfile(image):
         # Process a single image
         try:
             coordinates, vis_path = process_single_image(
-                args.image, model, visualize=not args.no_visualize
+                image, model, visualize=not no_visualize
             )
             print('\nOutput vector (xleft, yleft, xright, yright):')
             print(f'({coordinates[0]:.2f}, {coordinates[1]:.2f}, {coordinates[2]:.2f}, {coordinates[3]:.2f})')
         except Exception as e:
             print(f'Error processing image: {str(e)}')
     else:
-        print(f'Error: {args.image} is not a valid file or directory')
+        print(f'Error: {image} is not a valid file or directory')
 
 
 if __name__ == '__main__':
