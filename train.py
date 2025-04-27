@@ -94,7 +94,7 @@ def train_model(model, num_epochs, train_loader, val_loader, loss_fn, optimizer,
                 'optimizer_state_dict': optimizer.state_dict(),
                 'train_loss': epoch_train_loss,
                 'val_loss': epoch_val_loss,
-            }, os.path.join(checkpoint_dir, 'final_weights.pth'))
+            }, os.path.join(checkpoint_dir, 'best_model.pth'))
             print(f'Checkpoint saved at epoch {epoch+1}')
     
     # Save the final model
@@ -119,39 +119,39 @@ def train_model(model, num_epochs, train_loader, val_loader, loss_fn, optimizer,
     return model, {'train_losses': train_losses, 'val_losses': val_losses}
 
 
-def main():
+def main(model=None, num_epochs=None, train_loader=None, loss_fn=None, optimizer=None):
     # Set device
     device = torch.device('mps' if torch.backends.mps.is_available() else 'cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Using device: {device}')
     
     # Hyperparameters
     batch_size = 32
-    num_epochs = 50
+    ns = 50
     learning_rate = 0.001
     
     # Get data loaders
     data_dir = 'data'
-    train_loader, val_loader, test_loader = get_data_loaders(data_dir, batch_size=batch_size)
+    tl, vl, test_loader = get_data_loaders(data_dir, batch_size=batch_size)
     
     # Import the model from model.py
     from model import ResNet
     
     # Initialize model
-    model = ResNet()
-    model = model.to(device)
+    md = ResNet()
+    md = md.to(device)
     
     # Define loss function and optimizer
     loss_fn = nn.MSELoss()  # Mean Squared Error for regression
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    opm = optim.Adam(md.parameters(), lr=learning_rate)
     
     # Train the model
     trained_model, history = train_model(
-        model=model,
-        num_epochs=num_epochs,
-        train_loader=train_loader,
-        val_loader=val_loader,
+        model=md,
+        num_epochs=ns,
+        train_loader=tl,
+        val_loader=vl,
         loss_fn=loss_fn,
-        optimizer=optimizer,
+        optimizer=opm,
         device=device
     )
     
