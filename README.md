@@ -66,8 +66,3 @@ The outputs will be stored in the results/ directory.
 ## Results
 The model outputs a 4-dimensional vector representing the coordinates of both irises. Additionally, the interface provides a visualization of the detected keypoints overlaid on the input image.
 
-## Future Improvements
-- Explore even deeper backbone architectures (ResNet50, ResNet101)
-- Add support for real-time iris detection using webcam input
-- Implement ensemble methods to improve accuracy
-- Optimize inference speed for mobile deployment
