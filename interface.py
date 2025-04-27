@@ -1,6 +1,6 @@
 from model import ResNet as TheModel
-import train as the_trainer
-import predict as the_predictor
+from train import main as the_trainer
+from predict import main as the_predictor
 from dataset import IrisDataset as TheDataset
 from dataset import get_data_loaders as the_dataloader
 from config import DATASET_CONFIG
