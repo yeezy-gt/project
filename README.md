@@ -56,11 +56,12 @@ To detect irises in a single image:
 ```
 python interface.py --image path/to/image.jpg
 ```
+To detect irises in all the images in a directory:
+```
+python interface.py --image path/
+```
 The outputs will be stored in the results/ directory.
 
-Additional options:
-- `--checkpoint path/to/checkpoint.pth`: Specify a custom model checkpoint
-- `--no-visualize`: Disable visualization of results
 
 ## Results
 The model outputs a 4-dimensional vector representing the coordinates of both irises. Additionally, the interface provides a visualization of the detected keypoints overlaid on the input image.
